@@ -18,9 +18,6 @@ with st.sidebar:
 
 generic_url=st.text_input("URL",label_visibility="collapsed")
 
-## Gemma Model USsing Groq API
-llm =ChatGroq(model="llama-3.1-8b-instant", groq_api_key=groq_api_key)
-
 prompt_template="""
 Provide a summary of the following content in 300 words:
 Content:{text}
@@ -38,6 +35,8 @@ if st.button("Summarize the Content from YT or Website"):
     else:
         try:
             with st.spinner("Waiting..."):
+                ## Groq LLM (created here so the app boots without a key)
+                llm=ChatGroq(model="llama-3.1-8b-instant", groq_api_key=groq_api_key)
                 ## loading the website or yt video data
                 if "youtube.com" in generic_url:
                     loader=YoutubeLoader.from_youtube_url(generic_url,add_video_info=True)
